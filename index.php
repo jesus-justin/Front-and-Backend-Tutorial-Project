@@ -55,6 +55,16 @@ foreach ($records as $row) {
         $grouped[$areaKey][$stageKey][] = $row;
     }
 }
+
+$visualPool = [
+    'visual-wire',
+    'visual-grid',
+    'visual-form',
+    'visual-motion',
+    'visual-access',
+    'visual-data',
+];
+$visualIndex = 0;
 ?>
 <!doctype html>
 <html lang="en">
@@ -144,7 +154,11 @@ foreach ($records as $row) {
                                                 <p class="demo"><strong>Demo idea:</strong> <?php echo htmlspecialchars($row['demo']); ?></p>
                                             <?php endif; ?>
                                             <?php if (($row['area'] ?? '') === 'frontend'): ?>
-                                                <div class="mini-visual visual-<?php echo htmlspecialchars($row['stage'] ?? 'basic'); ?>" aria-hidden="true">
+                                                <?php
+                                                    $visualClass = $visualPool[$visualIndex % count($visualPool)];
+                                                    $visualIndex++;
+                                                ?>
+                                                <div class="mini-visual visual-<?php echo htmlspecialchars($row['stage'] ?? 'basic'); ?> <?php echo htmlspecialchars($visualClass); ?>" aria-hidden="true">
                                                     <div class="bar primary"></div>
                                                     <div class="bar secondary"></div>
                                                     <div class="mini-grid">
