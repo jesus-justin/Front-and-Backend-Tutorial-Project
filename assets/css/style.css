@@ -261,6 +261,64 @@ a {
     transform: translateY(0);
 }
 
+.mini-visual {
+    margin: 8px 0 12px;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(34, 211, 238, 0.08));
+}
+
+.mini-visual .bar {
+    height: 8px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.mini-visual .bar.primary {
+    width: 80%;
+    background: linear-gradient(120deg, rgba(168, 85, 247, 0.7), rgba(34, 211, 238, 0.7));
+}
+
+.mini-visual .bar.secondary {
+    width: 55%;
+}
+
+.mini-visual .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.mini-visual .mini-grid span {
+    display: block;
+    height: 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.visual-basic .mini-grid span:nth-child(1),
+.visual-basic .mini-grid span:nth-child(2) {
+    grid-column: span 2;
+}
+
+.visual-intermediate .mini-grid span:nth-child(odd) {
+    background: rgba(34, 211, 238, 0.3);
+}
+
+.visual-advanced .mini-grid span {
+    background: linear-gradient(90deg, rgba(168, 85, 247, 0.35), rgba(34, 211, 238, 0.35));
+}
+
+.visual-master .bar.primary {
+    background: linear-gradient(120deg, rgba(34, 211, 238, 0.8), rgba(168, 85, 247, 0.8));
+}
+
+.visual-master .mini-grid span:nth-child(3n) {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 .card:focus,
 .card:hover {
     border-color: rgba(168, 85, 247, 0.5);

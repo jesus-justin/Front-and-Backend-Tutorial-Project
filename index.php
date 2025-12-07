@@ -143,6 +143,16 @@ foreach ($records as $row) {
                                             <?php if (!empty($row['demo'])): ?>
                                                 <p class="demo"><strong>Demo idea:</strong> <?php echo htmlspecialchars($row['demo']); ?></p>
                                             <?php endif; ?>
+                                            <?php if (($row['area'] ?? '') === 'frontend'): ?>
+                                                <div class="mini-visual visual-<?php echo htmlspecialchars($row['stage'] ?? 'basic'); ?>" aria-hidden="true">
+                                                    <div class="bar primary"></div>
+                                                    <div class="bar secondary"></div>
+                                                    <div class="mini-grid">
+                                                        <span></span><span></span><span></span><span></span>
+                                                        <span></span><span></span><span></span><span></span>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
                                             <footer class="card__footer">
                                                 <span class="pill pill-ghost"><?php echo htmlspecialchars(ucfirst($row['area'])); ?></span>
                                                 <span class="pill pill-ghost"><?php echo htmlspecialchars(ucfirst($row['stage'])); ?></span>
