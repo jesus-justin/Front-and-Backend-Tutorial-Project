@@ -56,7 +56,22 @@ foreach ($records as $row) {
     }
 }
 
-$visualPool = [
+$visualByTitle = [
+    'semantic layout' => 'visual-layout',
+    'styling essentials' => 'visual-styling',
+    'dom events' => 'visual-events',
+    'responsive systems' => 'visual-responsive',
+    'fetching json' => 'visual-fetch',
+    'form ux' => 'visual-forms',
+    'performance & media' => 'visual-performance',
+    'state & data shapes' => 'visual-state',
+    'testing the ui' => 'visual-testing',
+    'design systems' => 'visual-design',
+    'progressive enhancement' => 'visual-progressive',
+    'observability in ui' => 'visual-observe',
+];
+
+$visualFallback = [
     'visual-wire',
     'visual-grid',
     'visual-form',
@@ -65,6 +80,18 @@ $visualPool = [
     'visual-data',
 ];
 $visualIndex = 0;
+
+function visual_class(array $row, array $byTitle, array $fallback, int &$index): string
+{
+    $titleKey = strtolower(trim($row['title'] ?? ''));
+    if ($titleKey !== '' && isset($byTitle[$titleKey])) {
+        return $byTitle[$titleKey];
+    }
+
+    $choice = $fallback[$index % count($fallback)];
+    $index++;
+    return $choice;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -154,16 +181,15 @@ $visualIndex = 0;
                                                 <p class="demo"><strong>Demo idea:</strong> <?php echo htmlspecialchars($row['demo']); ?></p>
                                             <?php endif; ?>
                                             <?php if (($row['area'] ?? '') === 'frontend'): ?>
-                                                <?php
-                                                    $visualClass = $visualPool[$visualIndex % count($visualPool)];
-                                                    $visualIndex++;
-                                                ?>
+                                                <?php $visualClass = visual_class($row, $visualByTitle, $visualFallback, $visualIndex); ?>
                                                 <div class="mini-visual visual-<?php echo htmlspecialchars($row['stage'] ?? 'basic'); ?> <?php echo htmlspecialchars($visualClass); ?>" aria-hidden="true">
-                                                    <div class="bar primary"></div>
-                                                    <div class="bar secondary"></div>
-                                                    <div class="mini-grid">
-                                                        <span></span><span></span><span></span><span></span>
-                                                        <span></span><span></span><span></span><span></span>
+                                                    <div class="visual-canvas">
+                                                        <span class="shape s1"></span>
+                                                        <span class="shape s2"></span>
+                                                        <span class="shape s3"></span>
+                                                        <span class="shape s4"></span>
+                                                        <span class="shape s5"></span>
+                                                        <span class="shape s6"></span>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
