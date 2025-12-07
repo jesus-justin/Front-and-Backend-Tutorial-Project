@@ -183,13 +183,25 @@ function visual_class(array $row, array $byTitle, array $fallback, int &$index):
                                             <?php if (($row['area'] ?? '') === 'frontend'): ?>
                                                 <?php $visualClass = visual_class($row, $visualByTitle, $visualFallback, $visualIndex); ?>
                                                 <div class="mini-visual visual-<?php echo htmlspecialchars($row['stage'] ?? 'basic'); ?> <?php echo htmlspecialchars($visualClass); ?>" aria-hidden="true">
-                                                    <div class="visual-canvas">
-                                                        <span class="shape s1"></span>
-                                                        <span class="shape s2"></span>
-                                                        <span class="shape s3"></span>
-                                                        <span class="shape s4"></span>
-                                                        <span class="shape s5"></span>
-                                                        <span class="shape s6"></span>
+                                                    <div class="site-frame">
+                                                        <div class="site-nav">
+                                                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                                            <span class="brand"></span>
+                                                            <span class="pill"></span>
+                                                        </div>
+                                                        <div class="site-hero">
+                                                            <div class="hero-copy">
+                                                                <span class="line l1"></span>
+                                                                <span class="line l2"></span>
+                                                                <span class="btn"></span>
+                                                            </div>
+                                                            <div class="hero-art"></div>
+                                                        </div>
+                                                        <div class="site-grid">
+                                                            <div class="card c1"></div>
+                                                            <div class="card c2"></div>
+                                                            <div class="card c3"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
