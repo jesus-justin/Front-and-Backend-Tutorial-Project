@@ -56,14 +56,15 @@ foreach ($records as $row) {
     }
 }
 
+
 $visualByTitle = [
     'semantic layout' => 'visual-layout',
     'styling essentials' => 'visual-styling',
-    'dom events' => 'visual-events',
+    'dom events' => 'visual-ripple',
     'responsive systems' => 'visual-responsive',
-    'fetching json' => 'visual-fetch',
+    'fetching json' => 'visual-stream',
     'form ux' => 'visual-forms',
-    'performance & media' => 'visual-performance',
+    'performance & media' => 'visual-speed',
     'state & data shapes' => 'visual-state',
     'testing the ui' => 'visual-testing',
     'design systems' => 'visual-design',
@@ -72,12 +73,12 @@ $visualByTitle = [
 ];
 
 $visualFallback = [
-    'visual-wire',
+    'visual-particles',
+    'visual-ripple',
+    'visual-stream',
+    'visual-speed',
     'visual-grid',
-    'visual-form',
-    'visual-motion',
-    'visual-access',
-    'visual-data',
+    'visual-design',
 ];
 $visualIndex = 0;
 
@@ -183,25 +184,22 @@ function visual_class(array $row, array $byTitle, array $fallback, int &$index):
                                             <?php if (($row['area'] ?? '') === 'frontend'): ?>
                                                 <?php $visualClass = visual_class($row, $visualByTitle, $visualFallback, $visualIndex); ?>
                                                 <div class="mini-visual visual-<?php echo htmlspecialchars($row['stage'] ?? 'basic'); ?> <?php echo htmlspecialchars($visualClass); ?>" aria-hidden="true">
-                                                    <div class="site-frame">
-                                                        <div class="site-nav">
-                                                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                                            <span class="brand"></span>
-                                                            <span class="pill"></span>
+                                                    <div class="effect">
+                                                        <div class="layer backdrop"></div>
+                                                        <div class="layer glow"></div>
+                                                        <div class="layer content">
+                                                            <div class="ui hero"></div>
+                                                            <div class="ui card a"></div>
+                                                            <div class="ui card b"></div>
+                                                            <div class="ui card c"></div>
                                                         </div>
-                                                        <div class="site-hero">
-                                                            <div class="hero-copy">
-                                                                <span class="line l1"></span>
-                                                                <span class="line l2"></span>
-                                                                <span class="btn"></span>
-                                                            </div>
-                                                            <div class="hero-art"></div>
+                                                        <div class="particles">
+                                                            <span class="p p1"></span>
+                                                            <span class="p p2"></span>
+                                                            <span class="p p3"></span>
+                                                            <span class="p p4"></span>
                                                         </div>
-                                                        <div class="site-grid">
-                                                            <div class="card c1"></div>
-                                                            <div class="card c2"></div>
-                                                            <div class="card c3"></div>
-                                                        </div>
+                                                        <div class="beam"></div>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
