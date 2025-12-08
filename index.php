@@ -442,6 +442,327 @@ const example = () => {
                                                     ?></code></pre>
                                                 </details>
                                             <?php endif; ?>
+                                            <?php if (($row['area'] ?? '') === 'backend'): ?>
+                                                <details class="code-sample">
+                                                    <summary>View code sample</summary>
+                                                    <div class="code-instructions">
+                                                        <p class="instruction-title">How to implement:</p>
+                                                        <ol class="instruction-steps">
+                                                            <?php
+                                                            $titleLower = strtolower($row['title'] ?? '');
+                                                            if ($titleLower === 'http & routing') {
+                                                                echo '<li>Define routes that map URLs to handlers</li>';
+                                                                echo '<li>Set proper HTTP headers like <code>Content-Type</code></li>';
+                                                                echo '<li>Return JSON with <code>json_encode()</code> or render HTML</li>';
+                                                            } elseif ($titleLower === 'database reads') {
+                                                                echo '<li>Use PDO with prepared statements for safety</li>';
+                                                                echo '<li>Always parameterize queries to prevent SQL injection</li>';
+                                                                echo '<li>Set charset to <code>utf8mb4</code> for full Unicode support</li>';
+                                                            } elseif ($titleLower === 'input validation') {
+                                                                echo '<li>Validate all incoming data with <code>filter_input()</code></li>';
+                                                                echo '<li>Normalize values (trim, lowercase) before processing</li>';
+                                                                echo '<li>Return early on validation errors with clear messages</li>';
+                                                            } elseif ($titleLower === 'rest patterns') {
+                                                                echo '<li>Use predictable URLs like <code>/api/resource/:id</code></li>';
+                                                                echo '<li>Match HTTP verbs to actions (GET/POST/PUT/DELETE)</li>';
+                                                                echo '<li>Return proper status codes (200, 201, 404, 500)</li>';
+                                                            } elseif ($titleLower === 'sessions & auth') {
+                                                                echo '<li>Hash passwords with <code>password_hash()</code></li>';
+                                                                echo '<li>Use sessions to track authenticated users</li>';
+                                                                echo '<li>Add CSRF tokens to protect forms</li>';
+                                                            } elseif ($titleLower === 'logging & metrics') {
+                                                                echo '<li>Log requests with path, duration, and status code</li>';
+                                                                echo '<li>Use structured logs (JSON) for easier parsing</li>';
+                                                                echo '<li>Add correlation IDs to trace requests across systems</li>';
+                                                            } elseif ($titleLower === 'caching & pagination') {
+                                                                echo '<li>Paginate queries with <code>LIMIT</code> and <code>OFFSET</code></li>';
+                                                                echo '<li>Cache frequent queries in memory or Redis</li>';
+                                                                echo '<li>Expose pagination metadata via <code>Link</code> headers</li>';
+                                                            } elseif ($titleLower === 'background work') {
+                                                                echo '<li>Queue tasks with a job system (Redis, RabbitMQ)</li>';
+                                                                echo '<li>Retry failed jobs with exponential backoff</li>';
+                                                                echo '<li>Keep jobs idempotent to handle retries safely</li>';
+                                                            } elseif ($titleLower === 'file handling') {
+                                                                echo '<li>Validate file type and size before accepting uploads</li>';
+                                                                echo '<li>Sanitize filenames and store in a secure directory</li>';
+                                                                echo '<li>Generate checksums (SHA-256) and store metadata</li>';
+                                                            } elseif ($titleLower === 'domain design') {
+                                                                echo '<li>Model entities as aggregates with clear boundaries</li>';
+                                                                echo '<li>Enforce business rules and invariants in services</li>';
+                                                                echo '<li>Keep use-cases explicit and testable</li>';
+                                                            } elseif ($titleLower === 'resilience & recovery') {
+                                                                echo '<li>Add health check endpoints for monitoring</li>';
+                                                                echo '<li>Implement circuit breakers to prevent cascading failures</li>';
+                                                                echo '<li>Degrade gracefully when dependencies are down</li>';
+                                                            } elseif ($titleLower === 'security posture') {
+                                                                echo '<li>Rotate secrets regularly and use environment variables</li>';
+                                                                echo '<li>Apply principle of least privilege to database users</li>';
+                                                                echo '<li>Audit access logs and sanitize all input/output</li>';
+                                                            } else {
+                                                                echo '<li>Follow best practices for secure, maintainable backend code</li>';
+                                                                echo '<li>Keep functions small and focused</li>';
+                                                                echo '<li>Write tests and monitor in production</li>';
+                                                            }
+                                                            ?>
+                                                        </ol>
+                                                    </div>
+                                                    <pre class="code-block"><code><?php
+$titleLower = strtolower($row['title'] ?? '');
+if ($titleLower === 'http & routing') {
+    echo htmlspecialchars('<?php
+// Simple router
+$path = parse_url($_SERVER[\'REQUEST_URI\'], PHP_URL_PATH);
+
+if ($path === \'/api/exhibits\') {
+    header(\'Content-Type: application/json\');
+    echo json_encode([\'status\' => \'ok\', \'data\' => $exhibits]);
+} elseif ($path === \'/\') {
+    include \'index.php\';
+} else {
+    http_response_code(404);
+    echo \'Not Found\';
+}');
+} elseif ($titleLower === 'database reads') {
+    echo htmlspecialchars('<?php
+$pdo = new PDO(\'mysql:host=localhost;dbname=dev_museum;charset=utf8mb4\', \'root\', \'\');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$stmt = $pdo->prepare(\'SELECT * FROM exhibits WHERE stage = :stage\');
+$stmt->execute([\'stage\' => $_GET[\'stage\'] ?? \'basic\']);
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo json_encode($results);');
+} elseif ($titleLower === 'input validation') {
+    echo htmlspecialchars('<?php
+$stage = filter_input(INPUT_GET, \'stage\', FILTER_SANITIZE_STRING);
+$stage = strtolower(trim($stage ?? \'basic\'));
+
+if (!in_array($stage, [\'basic\', \'intermediate\', \'advanced\', \'master\'])) {
+    http_response_code(400);
+    echo json_encode([\'error\' => \'Invalid stage parameter\']);
+    exit;
+}
+
+// Proceed with valid input
+$stmt = $pdo->prepare(\'SELECT * FROM exhibits WHERE stage = :stage\');
+$stmt->execute([\'stage\' => $stage]);');
+} elseif ($titleLower === 'rest patterns') {
+    echo htmlspecialchars('<?php
+// GET /api/exhibits
+if ($_SERVER[\'REQUEST_METHOD\'] === \'GET\' && $path === \'/api/exhibits\') {
+    $stage = $_GET[\'stage\'] ?? null;
+    $stmt = $pdo->prepare(\'SELECT * FROM exhibits WHERE (:stage IS NULL OR stage = :stage)\');
+    $stmt->execute([\'stage\' => $stage]);
+    
+    http_response_code(200);
+    header(\'Content-Type: application/json\');
+    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+}
+
+// POST /api/exhibits
+if ($_SERVER[\'REQUEST_METHOD\'] === \'POST\' && $path === \'/api/exhibits\') {
+    $data = json_decode(file_get_contents(\'php://input\'), true);
+    // Validate and insert...
+    http_response_code(201);
+    echo json_encode([\'id\' => $newId]);
+}');
+} elseif ($titleLower === 'sessions & auth') {
+    echo htmlspecialchars('<?php
+session_start();
+
+// Login
+if ($_POST[\'action\'] === \'login\') {
+    $user = findUserByEmail($_POST[\'email\']);
+    if ($user && password_verify($_POST[\'password\'], $user[\'password_hash\'])) {
+        $_SESSION[\'user_id\'] = $user[\'id\'];
+        $_SESSION[\'csrf_token\'] = bin2hex(random_bytes(32));
+        header(\'Location: /dashboard\');
+    } else {
+        echo \'Invalid credentials\';
+    }
+}
+
+// Protected route
+if (!isset($_SESSION[\'user_id\'])) {
+    http_response_code(401);
+    echo \'Unauthorized\';
+    exit;
+}');
+} elseif ($titleLower === 'logging & metrics') {
+    echo htmlspecialchars('<?php
+function logRequest($path, $duration, $status) {
+    $log = [
+        \'timestamp\' => date(\'c\'),
+        \'path\' => $path,
+        \'duration_ms\' => round($duration * 1000, 2),
+        \'status\' => $status,
+        \'correlation_id\' => $_SERVER[\'HTTP_X_CORRELATION_ID\'] ?? uniqid()
+    ];
+    file_put_contents(\'logs/requests.log\', json_encode($log) . PHP_EOL, FILE_APPEND);
+}
+
+$start = microtime(true);
+// Handle request...
+$duration = microtime(true) - $start;
+logRequest($_SERVER[\'REQUEST_URI\'], $duration, http_response_code());');
+} elseif ($titleLower === 'caching & pagination') {
+    echo htmlspecialchars('<?php
+// Pagination
+$page = max(1, (int)($_GET[\'page\'] ?? 1));
+$perPage = 20;
+$offset = ($page - 1) * $perPage;
+
+$stmt = $pdo->prepare(\'SELECT * FROM exhibits LIMIT :limit OFFSET :offset\');
+$stmt->bindValue(\':limit\', $perPage, PDO::PARAM_INT);
+$stmt->bindValue(\':offset\', $offset, PDO::PARAM_INT);
+$stmt->execute();
+
+// Simple cache
+$cacheKey = \'exhibits_page_\' . $page;
+$cached = apcu_fetch($cacheKey);
+if ($cached === false) {
+    $cached = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    apcu_store($cacheKey, $cached, 30); // 30 seconds
+}
+echo json_encode($cached);');
+} elseif ($titleLower === 'background work') {
+    echo htmlspecialchars('<?php
+// Queue a job
+function queueJob($type, $data) {
+    $job = [
+        \'id\' => uniqid(),
+        \'type\' => $type,
+        \'data\' => $data,
+        \'attempts\' => 0,
+        \'created_at\' => time()
+    ];
+    // Push to Redis queue
+    $redis = new Redis();
+    $redis->connect(\'127.0.0.1\', 6379);
+    $redis->rPush(\'job_queue\', json_encode($job));
+}
+
+// Worker
+while (true) {
+    $job = json_decode($redis->blPop(\'job_queue\', 5)[1] ?? \'{}\', true);
+    if ($job) {
+        try {
+            processJob($job);
+        } catch (Exception $e) {
+            retryJob($job);
+        }
+    }
+}');
+} elseif ($titleLower === 'file handling') {
+    echo htmlspecialchars('<?php
+if ($_FILES[\'file\'][\'error\'] === UPLOAD_ERR_OK) {
+    $tmpPath = $_FILES[\'file\'][\'tmp_name\'];
+    $size = $_FILES[\'file\'][\'size\'];
+    $mime = mime_content_type($tmpPath);
+    
+    // Validate
+    if (!in_array($mime, [\'image/jpeg\', \'image/png\'])) {
+        die(\'Invalid file type\');
+    }
+    if ($size > 5 * 1024 * 1024) {
+        die(\'File too large\');
+    }
+    
+    // Sanitize and store
+    $filename = bin2hex(random_bytes(16)) . \'.jpg\';
+    $checksum = hash_file(\'sha256\', $tmpPath);
+    move_uploaded_file($tmpPath, \'uploads/\' . $filename);
+    
+    // Store metadata in DB
+    $pdo->prepare(\'INSERT INTO files (filename, checksum, size) VALUES (?, ?, ?)\')
+        ->execute([$filename, $checksum, $size]);
+}');
+} elseif ($titleLower === 'domain design') {
+    echo htmlspecialchars('<?php
+class ExhibitService {
+    private $pdo;
+    
+    public function createExhibit(array $data): int {
+        // Enforce invariants
+        if (empty($data[\'title\']) || empty($data[\'stage\'])) {
+            throw new InvalidArgumentException(\'Title and stage required\');
+        }
+        
+        $stmt = $this->pdo->prepare(
+            \'INSERT INTO exhibits (area, stage, title, summary) VALUES (:area, :stage, :title, :summary)\'
+        );
+        $stmt->execute($data);
+        return (int)$this->pdo->lastInsertId();
+    }
+    
+    public function getExhibitsByStage(string $stage): array {
+        $stmt = $this->pdo->prepare(\'SELECT * FROM exhibits WHERE stage = :stage\');
+        $stmt->execute([\'stage\' => $stage]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}');
+} elseif ($titleLower === 'resilience & recovery') {
+    echo htmlspecialchars('<?php
+// Health check endpoint
+if ($path === \'/health\') {
+    $checks = [
+        \'database\' => checkDatabase(),
+        \'cache\' => checkCache(),
+        \'disk\' => disk_free_space(\'.\') > 1024 * 1024 * 100
+    ];
+    
+    $healthy = !in_array(false, $checks, true);
+    http_response_code($healthy ? 200 : 503);
+    echo json_encode([\'status\' => $healthy ? \'ok\' : \'degraded\', \'checks\' => $checks]);
+}
+
+function checkDatabase() {
+    try {
+        $pdo->query(\'SELECT 1\');
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}');
+} elseif ($titleLower === 'security posture') {
+    echo htmlspecialchars('<?php
+// Load secrets from env
+$dbPassword = getenv(\'DB_PASSWORD\');
+$apiKey = getenv(\'API_KEY\');
+
+// Least privilege DB user
+$pdo = new PDO(\'mysql:host=localhost;dbname=dev_museum\', \'app_readonly\', $dbPassword);
+
+// Sanitize output
+function sanitize($data) {
+    if (is_array($data)) {
+        return array_map(\'sanitize\', $data);
+    }
+    return htmlspecialchars($data, ENT_QUOTES, \'UTF-8\');
+}
+
+// Audit log
+function auditAction($user_id, $action, $resource) {
+    file_put_contents(\'logs/audit.log\', json_encode([
+        \'timestamp\' => date(\'c\'),
+        \'user_id\' => $user_id,
+        \'action\' => $action,
+        \'resource\' => $resource
+    ]) . PHP_EOL, FILE_APPEND);
+}');
+} else {
+    echo htmlspecialchars('<?php
+// Sample backend code for ' . ($row['title'] ?? 'this exhibit') . '
+// Follow best practices for security and performance
+
+function example() {
+    // Implement your backend logic here
+    return [\'status\' => \'ok\'];
+}');
+}
+                                                    ?></code></pre>
+                                                </details>
+                                            <?php endif; ?>
                                             <footer class="card__footer">
                                                 <span class="pill pill-ghost"><?php echo htmlspecialchars(ucfirst($row['area'])); ?></span>
                                                 <span class="pill pill-ghost"><?php echo htmlspecialchars(ucfirst($row['stage'])); ?></span>
