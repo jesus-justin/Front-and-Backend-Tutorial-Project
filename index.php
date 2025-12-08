@@ -202,6 +202,245 @@ function visual_class(array $row, array $byTitle, array $fallback, int &$index):
                                                         <div class="beam"></div>
                                                     </div>
                                                 </div>
+                                                <details class="code-sample">
+                                                    <summary>View code sample</summary>
+                                                    <div class="code-instructions">
+                                                        <p class="instruction-title">How to implement:</p>
+                                                        <ol class="instruction-steps">
+                                                            <?php
+                                                            $titleLower = strtolower($row['title'] ?? '');
+                                                            if ($titleLower === 'semantic layout') {
+                                                                echo '<li>Use semantic HTML5 tags like <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code></li>';
+                                                                echo '<li>Add meaningful landmarks for screen readers</li>';
+                                                                echo '<li>Keep structure clean before applying styles</li>';
+                                                            } elseif ($titleLower === 'styling essentials') {
+                                                                echo '<li>Use CSS custom properties for color tokens: <code>--primary</code>, <code>--spacing</code></li>';
+                                                                echo '<li>Apply flexbox with <code>display: flex</code> and <code>gap</code> for spacing</li>';
+                                                                echo '<li>Use <code>clamp()</code> for responsive sizing</li>';
+                                                            } elseif ($titleLower === 'dom events') {
+                                                                echo '<li>Attach listeners with <code>element.addEventListener(\'click\', handler)</code></li>';
+                                                                echo '<li>Use event delegation on parent containers for dynamic elements</li>';
+                                                                echo '<li>Keep handlers small and pure</li>';
+                                                            } elseif ($titleLower === 'responsive systems') {
+                                                                echo '<li>Use <code>display: grid</code> with <code>grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))</code></li>';
+                                                                echo '<li>Apply <code>@media</code> breakpoints for tablet/desktop</li>';
+                                                                echo '<li>Use fluid typography with <code>clamp(16px, 2vw, 20px)</code></li>';
+                                                            } elseif ($titleLower === 'fetching json') {
+                                                                echo '<li>Call APIs with <code>fetch(\'/api/data\')</code> and handle promises</li>';
+                                                                echo '<li>Show loading states while fetching</li>';
+                                                                echo '<li>Render data dynamically and handle errors gracefully</li>';
+                                                            } elseif ($titleLower === 'form ux') {
+                                                                echo '<li>Add accessible labels with <code>&lt;label for="..."&gt;</code></li>';
+                                                                echo '<li>Validate inline and show errors with <code>aria-live</code></li>';
+                                                                echo '<li>Use <code>:invalid</code> and <code>:focus</code> states for visual feedback</li>';
+                                                            } elseif ($titleLower === 'performance & media') {
+                                                                echo '<li>Lazy-load images with <code>loading="lazy"</code></li>';
+                                                                echo '<li>Use <code>IntersectionObserver</code> to trigger animations on scroll</li>';
+                                                                echo '<li>Respect <code>prefers-reduced-motion</code> media query</li>';
+                                                            } elseif ($titleLower === 'state & data shapes') {
+                                                                echo '<li>Normalize data into predictable shapes</li>';
+                                                                echo '<li>Derive UI state from a single source of truth</li>';
+                                                                echo '<li>Use event buses or state managers to avoid prop-drilling</li>';
+                                                            } elseif ($titleLower === 'testing the ui') {
+                                                                echo '<li>Write assertions for accessibility with tools like axe</li>';
+                                                                echo '<li>Test user flows with Cypress or Playwright</li>';
+                                                                echo '<li>Design components to be testable and isolated</li>';
+                                                            } elseif ($titleLower === 'design systems') {
+                                                                echo '<li>Define design tokens (colors, spacing, fonts) in CSS variables</li>';
+                                                                echo '<li>Build composable components with variants</li>';
+                                                                echo '<li>Document usage patterns in a style guide</li>';
+                                                            } elseif ($titleLower === 'progressive enhancement') {
+                                                                echo '<li>Ship core HTML first, ensure it works without JS</li>';
+                                                                echo '<li>Layer JavaScript enhancements progressively</li>';
+                                                                echo '<li>Add offline support with service workers</li>';
+                                                            } elseif ($titleLower === 'observability in ui') {
+                                                                echo '<li>Track user journeys with analytics events</li>';
+                                                                echo '<li>Use feature flags to experiment safely</li>';
+                                                                echo '<li>Instrument UI interactions for product insights</li>';
+                                                            } else {
+                                                                echo '<li>Follow best practices for clean, maintainable code</li>';
+                                                                echo '<li>Keep components small and focused</li>';
+                                                                echo '<li>Test and iterate based on user feedback</li>';
+                                                            }
+                                                            ?>
+                                                        </ol>
+                                                    </div>
+                                                    <pre class="code-block"><code><?php
+$titleLower = strtolower($row['title'] ?? '');
+if ($titleLower === 'semantic layout') {
+    echo htmlspecialchars('<header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+<main>
+  <section>
+    <h1>Welcome</h1>
+    <p>Use semantic tags for structure.</p>
+  </section>
+</main>
+<footer>
+  <p>&copy; 2025 Your Site</p>
+</footer>');
+} elseif ($titleLower === 'styling essentials') {
+    echo htmlspecialchars(':root {
+  --primary: #a855f7;
+  --spacing: 1rem;
+}
+
+.card {
+  display: flex;
+  gap: var(--spacing);
+  padding: var(--spacing);
+  background: var(--primary);
+  border-radius: 8px;
+}');
+} elseif ($titleLower === 'dom events') {
+    echo htmlspecialchars('const button = document.querySelector(\'.btn\');
+button.addEventListener(\'click\', (e) => {
+  e.target.classList.toggle(\'active\');
+});
+
+// Event delegation
+document.querySelector(\'.cards\').addEventListener(\'click\', (e) => {
+  if (e.target.matches(\'.card\')) {
+    e.target.classList.toggle(\'highlight\');
+  }
+});');
+} elseif ($titleLower === 'responsive systems') {
+    echo htmlspecialchars('.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    gap: 2rem;
+  }
+}');
+} elseif ($titleLower === 'fetching json') {
+    echo htmlspecialchars('async function fetchData() {
+  const response = await fetch(\'/api/exhibits\');
+  const data = await response.json();
+  
+  data.forEach(item => {
+    const card = document.createElement(\'div\');
+    card.textContent = item.title;
+    document.querySelector(\'.container\').append(card);
+  });
+}
+
+fetchData().catch(err => console.error(err));');
+} elseif ($titleLower === 'form ux') {
+    echo htmlspecialchars('<form>
+  <label for="email">Email</label>
+  <input type="email" id="email" required>
+  <span class="error" aria-live="polite"></span>
+  <button type="submit">Submit</button>
+</form>
+
+<style>
+input:invalid {
+  border-color: red;
+}
+input:focus {
+  outline: 2px solid blue;
+}
+</style>');
+} elseif ($titleLower === 'performance & media') {
+    echo htmlspecialchars('<img src="hero.jpg" loading="lazy" alt="Hero image">
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add(\'visible\');
+    }
+  });
+});
+
+document.querySelectorAll(\'.card\').forEach(card => {
+  observer.observe(card);
+});
+</script>');
+} elseif ($titleLower === 'state & data shapes') {
+    echo htmlspecialchars('const state = {
+  items: [],
+  filter: \'all\'
+};
+
+function updateUI() {
+  const filtered = state.items.filter(item => 
+    state.filter === \'all\' || item.type === state.filter
+  );
+  render(filtered);
+}
+
+state.items = fetchItems();
+updateUI();');
+} elseif ($titleLower === 'testing the ui') {
+    echo htmlspecialchars('// Cypress test example
+describe(\'Exhibit filters\', () => {
+  it(\'should filter by frontend\', () => {
+    cy.visit(\'/\');
+    cy.get(\'[data-filter="frontend"]\').click();
+    cy.get(\'.card\').should(\'have.length.greaterThan\', 0);
+  });
+});');
+} elseif ($titleLower === 'design systems') {
+    echo htmlspecialchars(':root {
+  --color-primary: #a855f7;
+  --color-secondary: #22d3ee;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --radius: 12px;
+}
+
+.btn {
+  padding: var(--space-md);
+  background: var(--color-primary);
+  border-radius: var(--radius);
+}');
+} elseif ($titleLower === 'progressive enhancement') {
+    echo htmlspecialchars('<!-- Core HTML works without JS -->
+<a href="/exhibits?stage=basic">Basic</a>
+
+<script>
+// Enhance with JS
+document.querySelectorAll(\'a\').forEach(link => {
+  link.addEventListener(\'click\', (e) => {
+    e.preventDefault();
+    fetch(link.href).then(/* SPA navigation */);
+  });
+});
+</script>');
+} elseif ($titleLower === 'observability in ui') {
+    echo htmlspecialchars('function trackEvent(name, data) {
+  fetch(\'/api/analytics\', {
+    method: \'POST\',
+    body: JSON.stringify({ event: name, ...data })
+  });
+}
+
+document.querySelector(\'.filter\').addEventListener(\'click\', (e) => {
+  trackEvent(\'filter_click\', { filter: e.target.dataset.filter });
+});');
+} else {
+    echo htmlspecialchars('// Sample code for ' . ($row['title'] ?? 'this exhibit') . '
+// Follow best practices and keep code clean
+
+const example = () => {
+  console.log(\'Implement your feature here\');
+};');
+}
+                                                    ?></code></pre>
+                                                </details>
                                             <?php endif; ?>
                                             <footer class="card__footer">
                                                 <span class="pill pill-ghost"><?php echo htmlspecialchars(ucfirst($row['area'])); ?></span>

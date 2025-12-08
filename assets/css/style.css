@@ -557,6 +557,80 @@ a {
     text-align: center;
 }
 
+.code-sample {
+    margin: 12px 0 0;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.code-sample summary {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent-2);
+    user-select: none;
+    transition: background 0.15s ease;
+}
+
+.code-sample summary:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.code-sample[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+.code-instructions {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border);
+}
+
+.instruction-title {
+    margin: 0 0 8px;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 14px;
+}
+
+.instruction-steps {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text);
+}
+
+.instruction-steps li {
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.instruction-steps code {
+    background: rgba(168, 85, 247, 0.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--accent-2);
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.code-block {
+    margin: 0;
+    padding: 14px;
+    background: rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e5e7eb;
+    white-space: pre;
+    display: block;
+}
+
 @media (max-width: 900px) {
     .hero {
         grid-template-columns: 1fr;
