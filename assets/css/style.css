@@ -235,6 +235,11 @@ main {
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
+.pill:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #f8fafc;
+}
+
 .pill.active {
     background: rgba(168, 85, 247, 0.15);
     border-color: rgba(168, 85, 247, 0.7);
@@ -331,6 +336,17 @@ main {
 .card-grid {
     display: grid;
     gap: 12px;
+}
+
+.card-grid:empty::after {
+    content: 'No exhibits yet. Add more in the database.';
+    display: block;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .card {
