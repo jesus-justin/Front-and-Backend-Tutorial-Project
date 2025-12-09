@@ -106,6 +106,7 @@ function visual_class(array $row, array $byTitle, array $fallback, int &$index):
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="hero">
         <div class="hero__content">
             <p class="eyebrow">Book + Museum</p>
@@ -146,7 +147,7 @@ function visual_class(array $row, array $byTitle, array $fallback, int &$index):
         </div>
     </section>
 
-    <main>
+    <main id="main-content">
         <?php foreach ($stages as $stageKey => $stageLabel): ?>
             <section class="stage" id="<?php echo htmlspecialchars($stageKey); ?>">
                 <div class="stage__header">

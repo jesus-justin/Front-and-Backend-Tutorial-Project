@@ -11,6 +11,10 @@
     --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     --radius: 16px;
     --space: 18px;
+    --max-width: 1180px;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glow: 0 25px 80px rgba(56, 189, 248, 0.16);
+    --grid-line: rgba(255, 255, 255, 0.03);
 }
 
 * {
@@ -26,6 +30,36 @@ body {
     color: var(--text);
     line-height: 1.6;
     padding-bottom: 48px;
+    position: relative;
+}
+
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 8px;
+    padding: 10px 14px;
+    background: #0b1224;
+    color: var(--text);
+    border: 1px solid var(--accent-2);
+    border-radius: 10px;
+    z-index: 10;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+}
+
+.skip-link:focus {
+    left: 12px;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) repeat center/120px 120px,
+        linear-gradient(0deg, var(--grid-line) 1px, transparent 1px) repeat center/120px 120px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 a {
@@ -38,6 +72,10 @@ a {
     grid-template-columns: 2fr 1fr;
     gap: 28px;
     padding: 48px clamp(16px, 3vw, 64px) 24px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .hero__content {
@@ -45,7 +83,19 @@ a {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 32px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), var(--glow);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero__content::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.12), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.12), transparent 45%);
+    opacity: 0.9;
+    pointer-events: none;
 }
 
 .hero__content h1 {
@@ -58,6 +108,8 @@ a {
     display: grid;
     gap: 12px;
     align-content: start;
+    position: relative;
+    z-index: 1;
 }
 
 .meta-card {
@@ -65,6 +117,7 @@ a {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 18px;
+    box-shadow: var(--glow);
 }
 
 .label {
@@ -142,6 +195,11 @@ a {
 
 .controls {
     padding: 0 clamp(16px, 3vw, 64px) 12px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: sticky;
+    top: 12px;
+    z-index: 2;
 }
 
 .filter-group {
@@ -168,11 +226,19 @@ a {
     color: var(--text);
     cursor: pointer;
     transition: all 0.15s ease;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .pill.active {
     background: rgba(168, 85, 247, 0.15);
     border-color: rgba(168, 85, 247, 0.7);
+}
+
+.pill:focus-visible,
+.cta:focus-visible,
+.card:focus-visible {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 2px;
 }
 
 .pill-ghost {
@@ -189,6 +255,10 @@ a {
 .stage {
     padding: 36px clamp(16px, 3vw, 64px);
     border-top: 1px solid var(--border);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .stage__header {
@@ -197,6 +267,10 @@ a {
     align-items: flex-end;
     gap: 12px;
     flex-wrap: wrap;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(34, 211, 238, 0.08));
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .stage__description {
@@ -207,8 +281,8 @@ a {
 
 .stage__badge {
     padding: 8px 12px;
-    background: var(--panel-strong);
-    border: 1px solid var(--border);
+    background: linear-gradient(120deg, rgba(168, 85, 247, 0.24), rgba(34, 211, 238, 0.18));
+    border: 1px solid rgba(168, 85, 247, 0.5);
     border-radius: 10px;
     color: var(--accent-2);
     font-weight: 600;
@@ -227,6 +301,16 @@ a {
     border-radius: var(--radius);
     padding: 18px;
     box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.column::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%);
+    pointer-events: none;
 }
 
 .column__header {
@@ -244,11 +328,12 @@ a {
 }
 
 .card {
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: linear-gradient(145deg, rgba(14, 22, 44, 0.9), rgba(16, 24, 46, 0.85));
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 14px;
-    padding: 14px;
+    padding: 16px;
     transition: border-color 0.2s ease, transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
 }
 
 .card.card-hidden {
@@ -509,7 +594,7 @@ a {
 .card:hover {
     border-color: rgba(168, 85, 247, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), var(--glow);
     outline: none;
 }
 
@@ -521,6 +606,7 @@ a {
 
 .card h3 {
     margin: 6px 0 6px;
+    letter-spacing: 0.01em;
 }
 
 .summary {
@@ -559,8 +645,8 @@ a {
 
 .code-sample {
     margin: 12px 0 0;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -604,6 +690,7 @@ a {
 .instruction-steps li {
     margin: 6px 0;
     line-height: 1.5;
+    opacity: 0.9;
 }
 
 .instruction-steps code {
@@ -618,7 +705,7 @@ a {
 .code-block {
     margin: 0;
     padding: 14px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.55);
     overflow-x: auto;
 }
 
@@ -643,5 +730,33 @@ a {
     .hero__meta {
         order: 1;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .controls {
+        position: static;
+    }
+}
+
+@supports (backdrop-filter: blur(8px)) {
+    .hero__content,
+    .meta-card,
+    .column,
+    .card {
+        backdrop-filter: blur(8px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .particles,
+    .beam,
+    .visual-ripple .ui.hero::before,
+    .visual-ripple .ui.hero::after {
+        display: none !important;
     }
 }
